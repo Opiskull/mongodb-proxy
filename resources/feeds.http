@@ -1,0 +1,11 @@
+### create
+POST http://localhost:3000/feeds
+Content-Type: application/json
+
+{
+    "url":"http://test.com",
+    "content": {"something":"something"}
+}
+
+### get all
+GET http://localhost:3000/feeds
