@@ -1,11 +1,17 @@
+@hostUrl = http://localhost:8080
+
 ### create
-POST http://localhost:3000/feeds
+POST {{hostUrl}}/feeds
 Content-Type: application/json
 
 {
     "url":"http://test.com",
-    "content": {"something":"something"}
+    "content": {"something":"something"},
+    "test": "test"
 }
 
 ### get all
-GET http://localhost:3000/feeds
+GET {{hostUrl}}/feeds
+
+### del
+DELETE {{hostUrl}}/feeds/6026d68d758eb521dbdfca17

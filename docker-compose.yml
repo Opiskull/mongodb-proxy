@@ -1,0 +1,8 @@
+version: "3"
+services:
+  web:
+    image: "opiskull/mongodb-proxy"
+    env_file:
+      - .env
+    ports:
+      - 8080:8080

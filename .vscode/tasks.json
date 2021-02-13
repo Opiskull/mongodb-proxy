@@ -7,6 +7,13 @@
 			"problemMatcher": [],
 			"label": "npm: dev",
 			"detail": "ts-node-dev --ignore-watch node_modules src/index.ts"
+		}, {
+			"type": "docker-build",
+			"dockerBuild": {
+				"context": ".",
+				"tag": "opiskull/mongodb-proxy:latest",
+				"dockerfile": "dockerfile"
+			}
 		}
 	]
 }
