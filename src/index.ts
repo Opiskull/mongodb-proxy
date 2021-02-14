@@ -8,10 +8,17 @@ import { logCtx, logError, logRequest } from "./middlewares";
 
 require("dotenv").config();
 
-connect(env.MONGODB_URL || "", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+(async () => {
+  try {
+    await connect(env.MONGODB_URL || "", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB connected");
+  } catch (e) {
+    console.log(e);
+  }
+})();
 
 const router = new Router();
 
