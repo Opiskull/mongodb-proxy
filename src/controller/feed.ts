@@ -4,7 +4,7 @@ import { model, Schema, SchemaTypes } from "mongoose";
 const feedSchema = new Schema({
   url: { type: SchemaTypes.String, required: true },
   created: { type: SchemaTypes.Date, default: Date.now },
-  content: { type: SchemaTypes.Mixed }, // field level
+  content: { type: SchemaTypes.Mixed },
 });
 
 const Feed = model("feed", feedSchema);
@@ -36,7 +36,7 @@ async function delMany(ctx: RouterContext) {
   ctx.status = 204;
 }
 
-export function init(router: Router) {
+export function feedRoutes(router: Router) {
   router
     .get("/feeds", getAll)
     .post("/feeds", create)

@@ -1,7 +1,7 @@
 import Koa from "koa";
 import { env } from "process";
 import { connect } from "mongoose";
-import { init as initFeed } from "./controller/feed";
+import { feedRoutes } from "./controller/feed";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
 import { logCtx, logError, logRequest } from "./middlewares";
@@ -24,7 +24,7 @@ const router = new Router();
 
 const app = new Koa();
 
-initFeed(router);
+feedRoutes(router);
 
 app.use(logCtx());
 app.use(logError());
