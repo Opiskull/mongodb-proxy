@@ -31,6 +31,21 @@ app.use(logError());
 app.use(logRequest());
 app.use(bodyParser());
 app.use(async (ctx, next) => {
+  if (process.env.ACCESS_TOKEN) {
+    if (
+      ctx.request.headers.authorization ===
+      "Bearer " + process.env.ACCESS_TOKEN
+    ) {
+      await next();
+    } else {
+      ctx.body = { err: "access denied" };
+      ctx.status = 403;
+    }
+  } else {
+    await next();
+  }
+});
+app.use(async (ctx, next) => {
   ctx.body = ctx.request.body;
   await next();
 });

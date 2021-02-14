@@ -1,13 +1,5 @@
 import Router, { RouterContext } from "@koa/router";
-import { model, Schema, SchemaTypes } from "mongoose";
-
-const feedSchema = new Schema({
-  url: { type: SchemaTypes.String, required: true },
-  created: { type: SchemaTypes.Date, default: Date.now },
-  content: { type: SchemaTypes.Mixed },
-});
-
-const Feed = model("feed", feedSchema);
+import { FeedEntry as Feed } from "../schemas/feedEntry";
 
 async function getAll(ctx: RouterContext) {
   const feeds = await Feed.find().exec();

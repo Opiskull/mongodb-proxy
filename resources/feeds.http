@@ -20,6 +20,7 @@ Content-Type: application/json
 
 ### get all
 GET {{hostUrl}}/feeds
+Authorization: Bearer asdfasdf
 
 ### del
 DELETE {{hostUrl}}/feeds/6026d68d758eb521dbdfca17
