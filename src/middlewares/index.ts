@@ -6,7 +6,7 @@ const ctxLogger = createLogger({ name: "ctx" });
 export function logCtx() {
   return async (ctx: Context, next: Next) => {
     ctx.logger = ctxLogger;
-    next();
+    await next();
   };
 }
 

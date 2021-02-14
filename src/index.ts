@@ -23,6 +23,10 @@ app.use(logCtx());
 app.use(logError());
 app.use(logRequest());
 app.use(bodyParser());
+app.use(async (ctx, next) => {
+  ctx.body = ctx.request.body;
+  await next();
+});
 app.use(router.routes());
 app.use(router.allowedMethods());
 

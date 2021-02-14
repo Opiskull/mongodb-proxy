@@ -4,11 +4,19 @@
 POST {{hostUrl}}/feeds
 Content-Type: application/json
 
-{
-    "url":"http://test.com",
-    "content": {"something":"something"},
-    "test": "test"
-}
+[{
+    "url":"{{$guid}}{{$guid}}{{$guid}}",
+    "content": {"something":"{{$randomInt 1 10000000}}"}
+},{
+    "url":"{{$guid}}{{$guid}}{{$guid}}",
+    "content": {"something":"{{$randomInt 1 10000000}}"}
+},{
+    "url":"{{$guid}}{{$guid}}{{$guid}}",
+    "content": {"something":"{{$randomInt 1 10000000}}"}
+},{
+    "url":"{{$guid}}{{$guid}}{{$guid}}",
+    "content": {"something":"{{$randomInt 1 10000000}}"}
+}]
 
 ### get all
 GET {{hostUrl}}/feeds
