@@ -1,0 +1,14 @@
+@hostUrl = http://localhost:8080
+
+### create
+POST {{hostUrl}}/entries
+Content-Type: application/json
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
+
+[]
+### get all
+GET {{hostUrl}}/entries
+Authorization: Bearer {{$dotenv ACCESS_TOKEN}}
+
+### del
+DELETE {{hostUrl}}/entries/6026d68d758eb521dbdfca17

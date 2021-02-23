@@ -1,7 +1,7 @@
 import Koa from "koa";
 import { env } from "process";
 import { connect } from "mongoose";
-import { feedRoutes } from "./controller/feed";
+import { feedRoutes } from "./controller/entry";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
 import { logCtx, logError, logRequest } from "./middlewares";
@@ -26,6 +26,14 @@ const app = new Koa();
 
 feedRoutes(router);
 
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (e) {
+    ctx.body = { status: 500, message: "Internal Server Error" };
+    ctx.status = 500;
+  }
+});
 app.use(logCtx());
 app.use(logError());
 app.use(logRequest());
