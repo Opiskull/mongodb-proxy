@@ -4,55 +4,51 @@ import { connect } from "mongoose";
 import { feedRoutes } from "./controller/entry";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
+import jwt from "koa-jwt";
 import { logCtx, logError, logRequest } from "./middlewares";
+import { mongodbStart } from "./schemas";
+import { sourcesRoutes } from "./controller/feedSource";
 
 require("dotenv").config();
 
-(async () => {
-  try {
-    await connect(env.MONGODB_URL || "", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB connected");
-  } catch (e) {
-    console.log(e);
+const throwEnv = (name: string) => {
+  const value = env[name];
+  if (!value) {
+    throw new Error(`${name} is missing`);
   }
-})();
+  return value;
+};
+
+const MONGODB_URL = throwEnv("MONGODB_URL");
+const SECRET = throwEnv("SECRET");
+
+mongodbStart(MONGODB_URL);
 
 const router = new Router();
 
 const app = new Koa();
 
 feedRoutes(router);
+sourcesRoutes(router);
 
 app.use(async (ctx, next) => {
   try {
     await next();
-  } catch (e) {
-    ctx.body = { status: 500, message: "Internal Server Error" };
-    ctx.status = 500;
+  } catch (err) {
+    if (err.status === 410) {
+      ctx.body = { status: 410, message: "Access Denied" };
+      ctx.status = 410;
+    } else {
+      ctx.body = { status: 500, message: "Internal Server Error" };
+      ctx.status = 500;
+    }
   }
 });
 app.use(logCtx());
 app.use(logError());
 app.use(logRequest());
+app.use(jwt({ secret: SECRET }));
 app.use(bodyParser());
-app.use(async (ctx, next) => {
-  if (process.env.ACCESS_TOKEN) {
-    if (
-      ctx.request.headers.authorization ===
-      "Bearer " + process.env.ACCESS_TOKEN
-    ) {
-      await next();
-    } else {
-      ctx.body = { err: "access denied" };
-      ctx.status = 403;
-    }
-  } else {
-    await next();
-  }
-});
 app.use(async (ctx, next) => {
   ctx.body = ctx.request.body;
   await next();

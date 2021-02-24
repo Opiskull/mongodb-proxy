@@ -4,11 +4,13 @@ import { Entry } from "../schemas";
 async function getAll(ctx: RouterContext) {
   const feeds = await Entry.find().exec();
   ctx.body = feeds;
+  ctx.status = 200;
 }
 
 async function get(ctx: RouterContext) {
   const feed = await Entry.findById(ctx.params.id).exec();
   ctx.body = feed;
+  ctx.status = 200;
 }
 
 async function create(ctx: RouterContext) {
@@ -35,10 +37,10 @@ async function delMany(ctx: RouterContext) {
 }
 
 export function feedRoutes(router: Router) {
-  router
-    .get("/entries", getAll)
-    .post("/entries", create)
-    .get("/entries/:id", get)
-    .del("/entries", delMany)
-    .del("/entries/:id", del);
+  return router
+    .get("/api/entries", getAll)
+    .post("/api/entries", create)
+    .get("/api/entries/:id", get)
+    .del("/api/entries", delMany)
+    .del("/api/entries/:id", del);
 }

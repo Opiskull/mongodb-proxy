@@ -7,4 +7,4 @@ export const watchedSchema = new Schema({
   source: SchemaTypes.ObjectId,
 });
 
-export const Watched = model("watched", watchedSchema);
+export const Watched = model("Watched", watchedSchema);

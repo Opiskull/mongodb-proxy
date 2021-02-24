@@ -1,7 +1,7 @@
 import { model, Schema, SchemaTypes } from "mongoose";
 
 export const entrySchema = new Schema({
-  // source: { type: SchemaTypes.ObjectId, required: true },
+  source: { type: SchemaTypes.ObjectId, ref: "FeedSource" },
   created: { type: SchemaTypes.Date, default: Date.now, immutable: true },
   url: { type: SchemaTypes.String },
   chapter: { type: SchemaTypes.String },
@@ -13,4 +13,4 @@ entrySchema.index(
   { unique: true, sparse: true }
 );
 
-export const Entry = model("entry", entrySchema);
+export const Entry = model("Entry", entrySchema);

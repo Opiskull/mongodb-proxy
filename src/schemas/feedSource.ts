@@ -1,7 +1,7 @@
 import { model, Schema, SchemaTypes } from "mongoose";
 
 export const feedSourceSchema = new Schema({
-  name: SchemaTypes.String,
+  name: { type: SchemaTypes.String, unique: true },
   url: SchemaTypes.String,
   lastSync: { type: SchemaTypes.Date },
   interval: SchemaTypes.String,
@@ -9,4 +9,4 @@ export const feedSourceSchema = new Schema({
   propertySelectors: SchemaTypes.Mixed,
 });
 
-export const FeedSource = model("feedSource", feedSourceSchema);
+export const FeedSource = model("FeedSource", feedSourceSchema);

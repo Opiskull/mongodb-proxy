@@ -8,4 +8,4 @@ export const seriesSchema = new Schema({
   imageUrl: SchemaTypes.String,
 });
 
-export const Series = model("series", seriesSchema);
+export const Series = model("Series", seriesSchema);
