@@ -1,0 +1,72 @@
+@hostUrl = http://localhost:8080
+@accessToken = {{$dotenv ACCESS_TOKEN}}
+
+GET {{hostUrl}}/api/sources
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+POST {{hostUrl}}/api/sources
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+  {
+    "url": "https://manhuaus.com",
+    "itemSelector": ".item-summary",
+    "name": "manhuaus",
+    "propertySelectors": {
+      "title":{
+        "selector":"a",
+        "regex": "^[^-]*[^ -]"
+      },
+      "chapter": {
+        "selector": ".chapter-item a",
+        "regex": "\\w[^-]*$"
+      },
+      "url":{
+        "selector":".chapter-item a",
+        "attribute": "href"
+      }
+    }
+  }
+
+###
+  { "name":"readmng",
+    "url": "https://www.readmng.com",
+    "itemSelector": ".content-list .style-list dd",
+    "propertySelectors": {
+      "title":{
+        "selector":"a",
+        "regex": "^[^-]*[^ -]"
+      },
+      "chapter": {
+        "selector": "a",
+        "regex": "\\w[^-]*$"
+      },
+      "url":{
+        "selector":"a",
+        "attribute": "href"
+      }
+    }
+  }
+###
+{
+  "name": "batoto",
+  "url": "https://bato.to",
+  "itemSelector": "#series-list .item-text",
+  "propertySelectors": {
+      "title":".item-title",
+      "chapter":".item-volch a",
+      "url": {
+        "selector": ".item-volch a",
+        "attribute": "href"
+      }
+  }
+}
+
+###
+
+
+
+

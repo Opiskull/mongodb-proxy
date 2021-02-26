@@ -9,4 +9,8 @@ export const feedSourceSchema = new Schema({
   propertySelectors: SchemaTypes.Mixed,
 });
 
+feedSourceSchema.statics.findByUrl = (url: string) => {
+  return FeedSource.findOne({ url: url });
+};
+
 export const FeedSource = model("FeedSource", feedSourceSchema);

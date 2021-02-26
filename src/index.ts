@@ -1,11 +1,15 @@
 import Koa from "koa";
 import { env } from "process";
-import { connect } from "mongoose";
 import { feedRoutes } from "./controller/entry";
 import Router from "@koa/router";
 import bodyParser from "koa-bodyparser";
 import jwt from "koa-jwt";
-import { logCtx, logError, logRequest } from "./middlewares";
+import {
+  logCtx,
+  errorHandler,
+  logRequest,
+  addUniqueIdToCtx,
+} from "./middlewares";
 import { mongodbStart } from "./schemas";
 import { sourcesRoutes } from "./controller/feedSource";
 
@@ -31,21 +35,9 @@ const app = new Koa();
 feedRoutes(router);
 sourcesRoutes(router);
 
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (err) {
-    if (err.status === 410) {
-      ctx.body = { status: 410, message: "Access Denied" };
-      ctx.status = 410;
-    } else {
-      ctx.body = { status: 500, message: "Internal Server Error" };
-      ctx.status = 500;
-    }
-  }
-});
+app.use(errorHandler({ debug: env["DEBUG"] }));
+app.use(addUniqueIdToCtx());
 app.use(logCtx());
-app.use(logError());
 app.use(logRequest());
 app.use(jwt({ secret: SECRET }));
 app.use(bodyParser());
